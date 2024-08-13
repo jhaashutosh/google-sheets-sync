@@ -40,3 +40,11 @@ This project aims to achieve real-time synchronization between a MySQL database 
   - **Future Extension**:
     - The conflict resolution strategy can be extended to support user-defined rules, allowing more granular control over how conflicts are handled.
     - For now, the default behavior prioritizes the last modification made.
+
+ ## Project Demonstration
+
+Click the image below to watch a video demonstration of the project:
+
+[![Watch the video](https://blog.coupler.io/wp-content/uploads/2021/07/coupler.io_.png)](https://youtu.be/XHp7zejJcAs)
+
+Or you can watch it [here](https://youtu.be/XHp7zejJcAs).
