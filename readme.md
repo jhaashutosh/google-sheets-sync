@@ -48,3 +48,9 @@ Click the image below to watch a video demonstration of the project:
 [![Watch the video](https://blog.coupler.io/wp-content/uploads/2021/07/coupler.io_.png)](https://youtu.be/XHp7zejJcAs)
 
 Or you can watch it [here](https://youtu.be/XHp7zejJcAs).
+
+## Project Flowchart
+
+The following diagram illustrates the project's flow and the different approaches used:
+
+![Project Flowchart](https://raw.githubusercontent.com/jhaashutosh/google-sheets-sync/master/project_assets/sync_sheet_db.png)
