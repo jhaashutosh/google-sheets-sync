@@ -1,0 +1,73 @@
+1. Polling approach <----->
+
++----------------+              +----------------+              +----------------+
+|  Google Sheets |<-- Polling --|  Polling Script|-- Polling -->|   Database     |
+|                |   (Every 5s) |                |   (Every 5s) |   (MySQL)      |
++----------------+              +----------------+              +----------------+
+       ^                                  |                             ^
+       |                                  |                             |
+       |                                  v                             |
+       |                         [Check for Changes]                    |
+       |                                  |                             |
+       |                                  v                             |
+       +------------------------- If Changes Found ---------------------+
+                                          |
+                                          v
+                               [Update Corresponding Component]
+
+
+
+
+
+
+2. Events + Polling <------->
+
++----------------+       On Change       +------------------+       Calls        +----------------+
+|  Google Sheets |---------------------->| Google Apps Script|------------------>|    Webhook     |
++----------------+     (Trigger Event)   +------------------+    (HTTP Request)  +----------------+
+                                                                                         |
+                                                                                         v
+                                                                                  +----------------+
+                                                                                  |   Database     |
+                                                                                  |    (MySQL)     |
+                                                                                  +----------------+
+                                                                                         ^
+                                                                                         |
+                                                                                         |  Polling (Every 5s)
+                                                                                         v
+                                                                                  +----------------+
+                                                                                  | Polling Script |
+                                                                                  +----------------+
+                                                                                         |
+                                                                                         v
+                                                                                  +----------------+
+                                                                                  |  Google Sheets |
+                                                                                  +----------------+
+
+
+                                                                                  
+
+
+3. Google Sheets Events + Database WebSockets  <----------->
+
++----------------+       On Change       +------------------+       Calls        +----------------+
+|  Google Sheets |---------------------->| Google Apps Script|------------------>|    Webhook     |
++----------------+     (Trigger Event)   +------------------+    (HTTP Request)  +----------------+
+                                                                                         |
+                                                                                         v
+                                                                                  +----------------+
+                                                                                  |   Database     |
+                                                                                  |    (MySQL)     |
+                                                                                  +----------------+
+                                                                                         |
+                                                                                         v
+                                                                                  +-------------------+
+                                                                                  | WebSocket Server  |
+                                                                                  +-------------------+
+                                                                                         |
+                                                                                         v
+                                                                                  +-------------------+
+                                                                                  |      Client       |
+                                                                                  | (Listening for    |
+                                                                                  | Database Changes) |
+                                                                                  +-------------------+
