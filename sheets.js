@@ -6,12 +6,17 @@ require('dotenv').config()
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
 const authorize = () => {
-  const client = new JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: SCOPES,
-  });
-  return client;
+  try {
+    const client = new JWT({
+      email: credentials.client_email,
+      key: credentials.private_key,
+      scopes: SCOPES,
+    });   
+    return client;
+  } catch(err) {
+    console.log('authorization failed!', err);
+  }
+
 };
 
 const getSheetData = async (auth) => {
