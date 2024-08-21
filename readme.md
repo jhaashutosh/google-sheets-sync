@@ -41,7 +41,53 @@ This project aims to achieve real-time synchronization between a MySQL database 
     - The conflict resolution strategy can be extended to support user-defined rules, allowing more granular control over how conflicts are handled.
     - For now, the default behavior prioritizes the last modification made.
 
- ## Project Demonstration
+## Dynamic Table and Trigger Creation
+
+This application supports dynamic creation of tables and triggers based on the data from Google Sheets. If the database does not have the required tables, triggers, or columns, the application will automatically create them during the initial sync. 
+
+### How It Works
+
+1. **Initial Sync and Table Creation:**
+   - When the application is initialized, it first checks whether the necessary tables and triggers exist in the database.
+   - If the tables are missing, the application will create them based on the structure of the Google Sheets data. This includes generating column names dynamically and inserting initial data into the newly created tables.
+
+2. **Dynamic Trigger Creation:**
+   - After creating the tables, the application will also create database triggers that help maintain synchronization between Google Sheets and the database.
+   - These triggers are automatically set up to log any changes (insert, update, delete) in the database to a `sync_log` table, which is then used to update Google Sheets accordingly.
+
+3. **Automatic Column Addition:**
+   - The application also checks if any new columns have been added to Google Sheets. If such columns are not present in the existing database tables, they are automatically added to the corresponding tables in the database.
+
+### Advantages
+
+- **Automated Setup:** This feature simplifies the setup process by automatically creating necessary database schemas and triggers without requiring manual intervention.
+- **Real-Time Synchronization:** Ensures that both Google Sheets and the database remain in sync with minimal latency.
+- **Scalability:** As the data structure in Google Sheets changes over time, the database schema evolves dynamically, allowing for seamless integration of new data fields.
+
+### Example Workflow
+
+- Upon receiving the first webhook from Google Sheets, the application:
+  1. Checks if the corresponding table exists in the database.
+  2. If the table does not exist, it creates the table and the required triggers.
+  3. If the table exists but is missing columns, those columns are added dynamically.
+  4. The triggers ensure that any changes in the database are logged and propagated back to Google Sheets.
+
+This setup allows for a robust, scalable synchronization mechanism that adapts to changes in Google Sheets structure over time.
+
+
+## Scalability - (Future Scope)
+
+To improve the scalability of the synchronization system, the following enhancements can be implemented:
+
+- **Message Queues (Kafka or RabbitMQ)**:
+  - Introducing a message broker like Kafka or RabbitMQ can help manage high-throughput data and ensure reliable messaging between the Google Sheets and the database.
+  - This can decouple the services, making the system more resilient and scalable, especially under heavy load.
+
+- **Node.js Clusters or Child Processes**:
+  - Utilizing Node.js clusters or child processes can improve the scalability of the server by taking advantage of multi-core processors.
+  - This allows multiple instances of the synchronization service to run concurrently, distributing the load and improving performance.
+
+## Project Demonstration
 
 Click the image below to watch a video demonstration of the project:
 
